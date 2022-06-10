@@ -16,7 +16,9 @@ namespace SpeakingClock
 
         public void SayTime()
         {
-            throw new NotImplementedException();
+            DateTime dateTime = Clock.GetTime();
+            string timeAsText = TimeToText.ConvertTimeToText(dateTime);
+            TextToSpeech.Speak(timeAsText);
         }
     }
 }
