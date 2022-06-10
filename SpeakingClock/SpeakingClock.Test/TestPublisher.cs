@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Moq;
 
 namespace SpeakingClock.Test
 {
@@ -54,9 +55,21 @@ namespace SpeakingClock.Test
             publisher.PublishMessage(message);
             // assert
             Assert.AreEqual(message, sub.ReceivedMessage);
-
         }
-
+        [TestMethod]
+        public void TestPublisherCanPublishMessagesUsingMoq()
+        {
+            // arrange
+            string message = "hello world";
+            Publisher publisher = new Publisher();
+            var mockSubscriber = new Mock<ISubscriber>();
+            publisher.AddSubcriber(mockSubscriber.Object);
+            // act
+            publisher.PublishMessage(message);
+            // assert
+            mockSubscriber.Verify(sub => sub.ReceiveMessage(message), Times.Once());
+            
+        }
 
 
     }
