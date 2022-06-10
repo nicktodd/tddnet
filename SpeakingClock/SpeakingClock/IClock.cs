@@ -8,6 +8,6 @@ namespace SpeakingClock
 {
     public interface IClock
     {
-        void GetTime();
+        DateTime GetTime();
     }
 }

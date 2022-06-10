@@ -13,6 +13,9 @@ namespace SpeakingClock.Test
         [TestMethod]
         public void TestSpeakingClockUsesCollaborators()
         {
+            DateTime midday = new DateTime(2022, 12, 1, 12, 0, 0);
+            string middayText = "midday";
+
             // arrange
             var clock = new Mock<IClock>();
             var speech = new Mock<ITextToSpeech>();
@@ -25,6 +28,10 @@ namespace SpeakingClock.Test
                 TextToSpeech = speech.Object
             };
 
+            clock.Setup(cl => cl.GetTime()).Returns(midday);
+            timeAsText.Setup(tt => tt.ConvertTimeToText(midday)).Returns(middayText);
+            //speech.Setup(sp => sp.Speak(middayText));
+
             // configure the clock to return midnight time
             // configure the timetotext to return "midnight"
 
@@ -33,10 +40,12 @@ namespace SpeakingClock.Test
             speakingClock.SayTime();
 
             // assert
-            // did the speaking clock as the clock what time it is?
+            // did the speaking clock ask the clock what time it is?
+            clock.Verify(cl => cl.GetTime(), Times.Once());
             // did the speaking clock ask the timetotext to convert the time?
+            timeAsText.Verify(tt => tt.ConvertTimeToText(midday), Times.Once());
             // did the speaking clock ask the speech engine to speak the time?
-
+            speech.Verify(sp => sp.Speak(middayText), Times.Once());
         }
 
     }
