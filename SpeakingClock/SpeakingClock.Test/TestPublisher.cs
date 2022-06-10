@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SpeakingClock.Test
 {
     
-    class Subscriber : ISubscriber
+    class SubscriberSpy : ISubscriber
     {
         public string ReceivedMessage
         {
@@ -37,7 +37,7 @@ namespace SpeakingClock.Test
             // arrange
             ExtendedPublisher publisher = new ExtendedPublisher();
             // act
-            ISubscriber sub = new Subscriber();
+            ISubscriber sub = new SubscriberSpy();
             publisher.AddSubcriber(sub);
             // assert
             Assert.AreSame(sub, publisher.GetLastSubscriber());
@@ -47,7 +47,7 @@ namespace SpeakingClock.Test
         {
             // arrange
             Publisher publisher = new Publisher();
-            Subscriber sub = new Subscriber();
+            SubscriberSpy sub = new SubscriberSpy();
             publisher.AddSubcriber(sub);
             // act
             string message = "hello world";

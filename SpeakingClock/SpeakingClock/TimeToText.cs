@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpeakingClock
 {
-    public class TimeToText
+    public class TimeToText : ITimeToText
     {
         public string ConvertTimeToText(DateTime timeToConvert)
         {
